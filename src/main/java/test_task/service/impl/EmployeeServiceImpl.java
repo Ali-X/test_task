@@ -6,7 +6,9 @@ import test_task.dao.EmployeeDao;
 import test_task.model.Employee;
 import test_task.service.EmployeeService;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -16,17 +18,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findAllBySalaryGreaterThatBoss() {
+        //return new ArrayList<>();
         return employeeDao.findAllWhereSalaryGreaterThatBoss();
     }
 
     @Override
     public List<Employee> findAllByMaxSalary() {
-        return employeeDao.findAllByMaxSalary();
+       // return new ArrayList<>();
+
+         return employeeDao.findAllByMaxSalary();
     }
 
     @Override
     public List<Employee> findAllWithoutBoss() {
-        return employeeDao.findAllWithoutBoss();
+        //return new ArrayList<>();
+
+         return employeeDao.findAllWithoutBoss();
     }
 
     @Override
@@ -34,12 +41,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         Iterable<Employee> employees = employeeDao.findAll();
 
         //TODO Implement method using Collection
-        // ---write your code here
-
-
-
-        employeeDao.saveAll(employees);
-        return 0L;
+        for (Employee employee: employees) {
+            if (employee.getName().equals(name)) {
+                employeeDao.delete(employee);
+                return employee.getId();
+            }
+        }
+        throw new NoSuchElementException("Employee with name - " + name + " not found");
     }
 
     @Override
@@ -47,20 +55,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         Iterable<Employee> employees = employeeDao.findAll();
 
         //TODO Implement method using Collection
-        // ---write your code here
-
-
-
-        employeeDao.saveAll(employees);
-        return 0L;
+        for (Employee employee: employees) {
+            if (employee.getName().equals(name)) {
+                employee.setSalary(BigDecimal.valueOf(8800));
+                employeeDao.save(employee);
+                return employee.getId();
+            }
+        }
+        throw new NoSuchElementException("Employee with name - " + name + " not found");
     }
 
     @Override
     public Long hireEmployee(Employee employee) {
         //TODO Implement method using Collection and DAO
-        // ---write your code here
-
-
-        return 0L;
+        Employee newEmployee = employeeDao.save(employee);
+        return newEmployee.getId();
     }
 }
