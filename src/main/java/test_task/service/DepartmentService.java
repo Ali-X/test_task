@@ -8,7 +8,7 @@ public interface DepartmentService {
 
     void save(Department department);
 
-    List<Long> findAllByDepartmentDoesntExceedThreePeople();
+ List<Long> findAllByDepartmentDoesntExceedThreePeople();
 
-    List<Long> findAllByMaxTotalSalary();
+   List<Long> findAllByMaxTotalSalary();
 }

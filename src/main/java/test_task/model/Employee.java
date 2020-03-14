@@ -24,7 +24,6 @@ public class Employee {
     private String name;
     private BigDecimal salary;
 
-
     public Employee(Department department, Employee boss, String name, BigDecimal salary) {
         this.department = department;
         this.boss = boss;

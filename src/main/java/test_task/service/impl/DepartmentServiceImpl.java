@@ -21,7 +21,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<Long> findAllByDepartmentDoesntExceedThreePeople() {
         return repository.findAllWhereDepartmentDoesntExceedThreePeople();
-    }
+   }
 
     @Override
     public List<Long> findAllByMaxTotalSalary() {
