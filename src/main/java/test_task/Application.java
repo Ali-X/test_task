@@ -112,3 +112,4 @@ public class Application implements CommandLineRunner {
         log.info("database initialization finished...");
     }
 }
+
