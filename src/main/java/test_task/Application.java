@@ -1,5 +1,7 @@
 package test_task;
 
+import java.util.HashSet;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import test_task.model.Department;
 import test_task.model.Employee;
 import test_task.service.DepartmentService;
-import test_task.service.EmployeeService;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.List;
+import test_task.service.EmployeeService;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -35,8 +35,10 @@ public class Application implements CommandLineRunner {
         log.info("1) Get a list of employees receiving a salary greater than that of the boss...");
         outputResult(employeeService.findAllBySalaryGreaterThatBoss());
 
-        log.info("2) Get a list of departments IDs where the number of employees doesn't exceed 3 people...");
-        List<Long> allByDepartmentDoesntExceedThreePeople = departmentService.findAllByDepartmentDoesntExceedThreePeople();
+        log.info("2) Get a list of departments IDs where the number "
+                + "of employees doesn't exceed 3 people...");
+        List<Long> allByDepartmentDoesntExceedThreePeople = departmentService
+                .findAllByDepartmentDoesntExceedThreePeople();
         log.info(allByDepartmentDoesntExceedThreePeople.toString());
 
         log.info("3) Get a list of departments IDs with the maximum total salary of employees...");
@@ -53,10 +55,12 @@ public class Application implements CommandLineRunner {
         log.info(employeeService.fireEmployee("Dayna Whitworth").toString());
 
         log.info("7) Change salary for Kelis Andrews and get his ID...");
-        log.info(employeeService.changeSalary("Kelis Andrews").toString());
+        log.info(employeeService.changeSalary("Kelis Andrews",
+                new BigDecimal(2009)).toString());
 
         log.info("8) Hire new employee in IT department and get his new ID...");
-        log.info(employeeService.hireEmployee(new Employee()).toString());
+        log.info(employeeService.hireEmployee(new Employee(),
+                departmentService.getDepartmentByName("IT")).toString());
 
     }
 
@@ -71,21 +75,33 @@ public class Application implements CommandLineRunner {
         Department department2 = new Department("Accounting");
         Department department3 = new Department("Management");
 
-        Employee employee1 = new Employee(department1, null, "Ralphy Mcneill", new BigDecimal(10000));
-        Employee employee2 = new Employee(department2, null, "Kieran Morton", new BigDecimal(20000));
-        Employee employee3 = new Employee(department3, null, "Jayden Cruz", new BigDecimal(30000));
+        Employee employee1 = new Employee(department1, null, "Ralphy Mcneill",
+                new BigDecimal(10000));
+        Employee employee2 = new Employee(department2, null, "Kieran Morton",
+                new BigDecimal(20000));
+        Employee employee3 = new Employee(department3, null, "Jayden Cruz",
+                new BigDecimal(30000));
 
-        Employee employee1_1 = new Employee(department1, employee1, "Libby Garner", new BigDecimal(1000));
-        Employee employee1_2 = new Employee(department1, employee1, "Valentino Brady", new BigDecimal(20000));
-        Employee employee1_3 = new Employee(department1, employee1, "Nour Wagstaff", new BigDecimal(3000));
+        Employee employee1_1 = new Employee(department1, employee1, "Libby Garner",
+                new BigDecimal(1000));
+        Employee employee1_2 = new Employee(department1, employee1, "Valentino Brady",
+                new BigDecimal(20000));
+        Employee employee1_3 = new Employee(department1, employee1, "Nour Wagstaff",
+                new BigDecimal(3000));
 
-        Employee employee2_1 = new Employee(department2, employee2, "Zishan Nash", new BigDecimal(1200));
-        Employee employee2_2 = new Employee(department2, employee2, "Dayna Whitworth", new BigDecimal(2300));
-        Employee employee2_3 = new Employee(department2, employee2, "Kelis Andrews", new BigDecimal(3400));
+        Employee employee2_1 = new Employee(department2, employee2, "Zishan Nash",
+                new BigDecimal(1200));
+        Employee employee2_2 = new Employee(department2, employee2, "Dayna Whitworth",
+                new BigDecimal(2300));
+        Employee employee2_3 = new Employee(department2, employee2, "Kelis Andrews",
+                new BigDecimal(3400));
 
-//        Employee employee3_1 = new Employee(department3, employee3, "Keanu Romero", new BigDecimal(1250));
-        Employee employee3_2 = new Employee(department3, employee3, "Macauley Wells", new BigDecimal(2360));
-        Employee employee3_3 = new Employee(department3, employee3, "Hollie Hawkins", new BigDecimal(34700));
+        Employee employee3_1 = new Employee(department3, employee3, "Keanu Romero",
+                new BigDecimal(1250));
+        Employee employee3_2 = new Employee(department3, employee3, "Macauley Wells",
+                new BigDecimal(2360));
+        Employee employee3_3 = new Employee(department3, employee3, "Hollie Hawkins",
+                new BigDecimal(34700));
 
         department1.setEmployees(new HashSet<>());
         department1.getEmployees().add(employee1);
@@ -101,7 +117,7 @@ public class Application implements CommandLineRunner {
 
         department3.setEmployees(new HashSet<>());
         department3.getEmployees().add(employee3);
-//        department3.getEmployees().add(employee3_1);
+        department3.getEmployees().add(employee3_1);
         department3.getEmployees().add(employee3_2);
         department3.getEmployees().add(employee3_3);
 
@@ -112,4 +128,3 @@ public class Application implements CommandLineRunner {
         log.info("database initialization finished...");
     }
 }
-

@@ -1,8 +1,8 @@
 package test_task.service;
 
-import test_task.model.Department;
-
 import java.util.List;
+import java.util.Optional;
+import test_task.model.Department;
 
 public interface DepartmentService {
 
@@ -11,4 +11,6 @@ public interface DepartmentService {
     List<Long> findAllByDepartmentDoesntExceedThreePeople();
 
     List<Long> findAllByMaxTotalSalary();
+
+    Optional<Department> getDepartmentByName(String name);
 }
