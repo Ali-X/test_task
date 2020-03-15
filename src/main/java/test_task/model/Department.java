@@ -11,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="departments")
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

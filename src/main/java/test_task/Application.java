@@ -48,15 +48,17 @@ public class Application implements CommandLineRunner {
 
         log.info("5) Get a list of employees who do not have boss in the same department...");
         outputResult(employeeService.findAllWithoutBoss());
-
-        log.info("6) Fire Dayna Whitworth and get her ID...");
-        log.info(employeeService.fireEmployee("Dayna Whitworth").toString());
+//
+        log.info("6) Fire Libby Garner and get her ID...");
+        log.info(employeeService.fireEmployee("Libby Garner").toString());
 
         log.info("7) Change salary for Kelis Andrews and get his ID...");
-        log.info(employeeService.changeSalary("Kelis Andrews").toString());
+        log.info(employeeService.changeSalary("Kelis Andrews", BigDecimal.valueOf(30400)).toString());
 
         log.info("8) Hire new employee in IT department and get his new ID...");
-        log.info(employeeService.hireEmployee(new Employee()).toString());
+        Department newDepartment = new Department("Idlers");
+        departmentService.save(newDepartment);
+        log.info(employeeService.hireEmployee(new Employee(newDepartment, null, "Jeremy Noname", BigDecimal.valueOf(30400))).toString());
 
     }
 
@@ -83,7 +85,7 @@ public class Application implements CommandLineRunner {
         Employee employee2_2 = new Employee(department2, employee2, "Dayna Whitworth", new BigDecimal(2300));
         Employee employee2_3 = new Employee(department2, employee2, "Kelis Andrews", new BigDecimal(3400));
 
-//        Employee employee3_1 = new Employee(department3, employee3, "Keanu Romero", new BigDecimal(1250));
+        //Employee employee3_1 = new Employee(department2, employee2, "Keanu Romero", new BigDecimal(40160));
         Employee employee3_2 = new Employee(department3, employee3, "Macauley Wells", new BigDecimal(2360));
         Employee employee3_3 = new Employee(department3, employee3, "Hollie Hawkins", new BigDecimal(34700));
 
@@ -98,6 +100,7 @@ public class Application implements CommandLineRunner {
         department2.getEmployees().add(employee2_1);
         department2.getEmployees().add(employee2_2);
         department2.getEmployees().add(employee2_3);
+        //department2.getEmployees().add(employee3_1);
 
         department3.setEmployees(new HashSet<>());
         department3.getEmployees().add(employee3);
