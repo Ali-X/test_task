@@ -57,7 +57,6 @@ public class Application implements CommandLineRunner {
 
         log.info("8) Hire new employee in IT department and get his new ID...");
         log.info(employeeService.hireEmployee(new Employee()).toString());
-
     }
 
     private void outputResult(List<Employee> employeesList) {

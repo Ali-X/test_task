@@ -6,6 +6,8 @@ import test_task.dao.EmployeeDao;
 import test_task.model.Employee;
 import test_task.service.EmployeeService;
 
+import java.math.BigDecimal;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -32,25 +34,35 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Long fireEmployee(String name) {
         Iterable<Employee> employees = employeeDao.findAll();
-
         //TODO Implement method using Collection
         // ---write your code here
-
-
-
+        Iterator<Employee> employeeIterator = employees.iterator();
+        while (employeeIterator.hasNext()) {
+            Employee employee = employeeIterator.next();
+            if (employee.getName().equals(name)) {
+                employeeIterator.remove();
+                employeeDao.delete(employee);
+                return employee.getId();
+            }
+        }
         employeeDao.saveAll(employees);
         return 0L;
     }
 
     @Override
     public Long changeSalary(String name) {
+        BigDecimal newSalary = new BigDecimal(5000);
+        //I think we need this "newSalary" argument in the method`s signature
         Iterable<Employee> employees = employeeDao.findAll();
-
         //TODO Implement method using Collection
         // ---write your code here
-
-
-
+        for (Employee employee : employees) {
+            if (employee.getName().equals(name)) {
+                employee.setSalary(newSalary);
+                employeeDao.save(employee);
+                return employee.getId();
+            }
+        }
         employeeDao.saveAll(employees);
         return 0L;
     }
@@ -59,8 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Long hireEmployee(Employee employee) {
         //TODO Implement method using Collection and DAO
         // ---write your code here
-
-
-        return 0L;
+        Employee newEmployee = employeeDao.save(employee);
+        return newEmployee.getId();
     }
 }
